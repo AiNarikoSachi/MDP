@@ -36,6 +36,10 @@ proguard/
 # Android Studio captures folder
 captures/
 
+gradlew
+
+gradlew.bat
+
 # IntelliJ
 *.iml
 .idea/workspace.xml

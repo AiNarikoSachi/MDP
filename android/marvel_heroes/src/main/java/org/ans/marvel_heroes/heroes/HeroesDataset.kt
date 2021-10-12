@@ -1,8 +1,8 @@
-package org.atf.marvel_heroes.heroes
+package org.ans.marvel_heroes.heroes
 
 import androidx.core.graphics.toColorInt
-import org.atf.marvel_heroes.R
-import org.atf.marvel_heroes.heroes.model.Hero
+import org.ans.marvel_heroes.R
+import org.ans.marvel_heroes.heroes.model.Hero
 
 class HeroesDataset {
 

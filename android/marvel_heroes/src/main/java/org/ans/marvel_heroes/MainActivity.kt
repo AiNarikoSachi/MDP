@@ -1,13 +1,13 @@
-package org.atf.marvel_heroes
+package org.ans.marvel_heroes
 
 import android.animation.ArgbEvaluator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.atf.marvel_heroes.R
-import org.atf.marvel_heroes.heroes.adapter.HeroAdapter
-import org.atf.marvel_heroes.heroes.HeroesDataset
-import org.atf.marvel_heroes.heroes.model.Hero
-import org.atf.marvel_heroes.custromViewes.TriangleView
+import org.ans.marvel_heroes.R
+import org.ans.marvel_heroes.heroes.adapter.HeroAdapter
+import org.ans.marvel_heroes.heroes.HeroesDataset
+import org.ans.marvel_heroes.heroes.model.Hero
+import org.ans.marvel_heroes.custromViewes.TriangleView
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer

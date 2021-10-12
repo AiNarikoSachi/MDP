@@ -1,4 +1,4 @@
-package org.atf.marvel_heroes.heroes.adapter
+package org.ans.marvel_heroes.heroes.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 
-import org.atf.marvel_heroes.R
-import org.atf.marvel_heroes.heroes.model.Hero
+import org.ans.marvel_heroes.R
+import org.ans.marvel_heroes.heroes.model.Hero
 
 
 class HeroAdapter(private val heroes: List<Hero>) : RecyclerView.Adapter<HeroAdapter.HeroHolder>() {
