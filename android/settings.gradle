@@ -1,2 +1,0 @@
-include ':marvel_heroes'
-rootProject.name = "Marvel heroes"
