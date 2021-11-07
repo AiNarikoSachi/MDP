@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  IOSHeroesMarvel
+//  marvel
 //
-//  Created by шкуренко on 06.11.2021.
+//  Created by шкуренко on 07.11.2021.
 //
 
 import UIKit
