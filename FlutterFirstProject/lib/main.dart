@@ -5,7 +5,6 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -15,8 +14,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 class MyStatelessWidget extends StatelessWidget {
   const MyStatelessWidget({Key? key}) : super(key: key);
@@ -36,7 +33,8 @@ class MyStatelessWidget extends StatelessWidget {
           children:<Widget>[
             Padding(
                 padding: const EdgeInsets.fromLTRB(70,30,50,0),
-                child: Image.asset('image/marvel.png')),
+                child: Image.asset('image/marvel.png'),
+                ),
             const SizedBox(
               width: 800,
               height: 300,
@@ -47,8 +45,9 @@ class MyStatelessWidget extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 175, 0, 0),
-
+              padding: const EdgeInsets.fromLTRB(10, 175, 10, 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
               child: PageView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -58,7 +57,10 @@ class MyStatelessWidget extends StatelessWidget {
                     children: <Widget>[
                       Image.asset(
                         'image/Blade.jpg',
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                        alignment: Alignment.center,
                       ),
                       const Padding(
                         padding: EdgeInsets.fromLTRB(125, 400, 20, 0),
@@ -75,7 +77,10 @@ class MyStatelessWidget extends StatelessWidget {
                     children: <Widget>[
                       Image.asset(
                         'image/Ghost_rider.jpg',
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                        alignment: Alignment.center,
                       ),
                       const Padding(
                         padding: EdgeInsets.fromLTRB(50, 400, 20, 0),
@@ -92,7 +97,10 @@ class MyStatelessWidget extends StatelessWidget {
                     children: <Widget>[
                       Image.asset(
                         'image/Iron_fist.jpg',
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                        alignment: Alignment.center,
                       ),
                       const Padding(
                         padding: EdgeInsets.fromLTRB(100, 400, 20, 0),
@@ -109,7 +117,10 @@ class MyStatelessWidget extends StatelessWidget {
                     children: <Widget>[
                       Image.asset(
                         'image/Magneto.jpg',
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                        alignment: Alignment.center,
                       ),
                       const Padding(
                         padding: EdgeInsets.fromLTRB(75, 400, 20, 0),
@@ -126,7 +137,10 @@ class MyStatelessWidget extends StatelessWidget {
                     children: <Widget>[
                       Image.asset(
                         'image/Punisher.jpg',
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                        alignment: Alignment.center,
                       ),
                       const Padding(
                         padding: EdgeInsets.fromLTRB(75, 400, 20, 0),
@@ -140,7 +154,7 @@ class MyStatelessWidget extends StatelessWidget {
                 ],
               ),
             ),
-          ],
+            ),   ],
         ),
       ),
     );
