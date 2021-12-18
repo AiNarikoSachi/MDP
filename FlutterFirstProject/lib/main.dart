@@ -9,14 +9,36 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: MyStatelessWidget(),
+        body: MarvelPageView(),
       ),
     );
   }
 }
 
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({Key? key}) : super(key: key);
+class Marvel {
+  final String name;
+  final String image;
+
+  Marvel({ required this.name, required this.image});
+}
+
+class MarvelPageView extends StatefulWidget {
+  const MarvelPageView({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _MyStatelessWidget();
+}
+
+class _MyStatelessWidget extends State<MarvelPageView> {
+  final controller = PageController(viewportFraction: 0.85);
+
+  final List<Marvel> heroes = [
+    Marvel(name: "Blade", image: 'image/Blade.jpg'),
+    Marvel(name: "Ghost_rider", image: 'image/Ghost_rider.jpg'),
+    Marvel(name: "Iron_fist", image: 'image/Iron_fist.jpg'),
+    Marvel(name: "Magneto", image: 'image/Magneto.jpg'),
+    Marvel(name: "Punisher", image: 'image/Punisher.jpg'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,115 +67,41 @@ class MyStatelessWidget extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 175, 10, 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-              child: PageView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-
-                  Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(
-                        'image/Blade.jpg',
-                        fit: BoxFit.cover,
-                        height: double.infinity,
-                        width: double.infinity,
-                        alignment: Alignment.center,
+              padding: const EdgeInsets.fromLTRB(0, 175, 0, 10),
+              child: PageView.builder(
+                  controller: controller,
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  pageSnapping: true,
+                  padEnds: true,
+                  itemCount: heroes.length,
+                  itemBuilder: (context, index)=> Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      elevation: 15,
+                      clipBehavior: Clip.antiAlias,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          Image.asset(
+                            heroes[index].image,
+                            fit: BoxFit.cover,
+                            height: double.infinity,
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                          ),
+                           Container(
+                            margin: const EdgeInsets.fromLTRB(40, 380, 20, 0),
+                            child: Text(
+                              heroes[index].name,
+                              style: const TextStyle(color: Colors.white, fontSize: 50),
+                            ),
+                          ),
+                        ],
                       ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(125, 400, 20, 0),
-                        child: Text(
-                          "Blade",
-                          style: TextStyle(color: Colors.white, fontSize: 60),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(
-                        'image/Ghost_rider.jpg',
-                        fit: BoxFit.cover,
-                        height: double.infinity,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(50, 400, 20, 0),
-                        child: Text(
-                          "Ghost_rider",
-                          style: TextStyle(color: Colors.white, fontSize: 60),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(
-                        'image/Iron_fist.jpg',
-                        fit: BoxFit.cover,
-                        height: double.infinity,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(100, 400, 20, 0),
-                        child: Text(
-                          "Iron_fist",
-                          style: TextStyle(color: Colors.black, fontSize: 60),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(
-                        'image/Magneto.jpg',
-                        fit: BoxFit.cover,
-                        height: double.infinity,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(75, 400, 20, 0),
-                        child: Text(
-                          "Magneto",
-                          style: TextStyle(color: Colors.white, fontSize: 60),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(
-                        'image/Punisher.jpg',
-                        fit: BoxFit.cover,
-                        height: double.infinity,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(75, 400, 20, 0),
-                        child: Text(
-                          "Punisher",
-                          style: TextStyle(color: Colors.white, fontSize: 60),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                    ),
+                  )),
             ),   ],
         ),
       ),
