@@ -9,9 +9,7 @@ class MarvelInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(brightness: Brightness.dark, primaryColor: Colors.grey),
-      home: Scaffold(
+    return Scaffold(
         body: Hero(
           tag: marvel.id,
           child: Stack(fit: StackFit.expand, children: [
@@ -54,7 +52,6 @@ class MarvelInfo extends StatelessWidget {
             )
           ]),
         ),
-      ),
-    );
+      );
   }
 }
