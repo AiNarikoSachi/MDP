@@ -3,6 +3,7 @@ import 'package:flutterfirstproject/marvel_api.dart';
 import 'package:flutterfirstproject/marvel_info.dart';
 
 import 'marvel.dart';
+import 'marvel_placeholder.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,8 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
+    return MaterialApp(
+      theme: ThemeData(brightness: Brightness.dark, primaryColor: Colors.grey),
+      home: const Scaffold(
         body: MarvelPageView(),
       ),
     );
@@ -37,8 +39,7 @@ class _MyStatelessWidget extends State<MarvelPageView> {
     super.initState();
 
     MarvelApi api = MarvelApi();
-    api.readMarvelHeroes([1009191, 1010925, 1011413, 1009417, 1009368]).then(
-        (values) {
+    api.readFirstHeroes(50).then((values) {
       setState(() {
         isLoaded = true;
         heroes = values;
@@ -48,115 +49,83 @@ class _MyStatelessWidget extends State<MarvelPageView> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoaded == true && heroes.isEmpty) {
-      return Material(
-        type: MaterialType.transparency,
-        child: MaterialApp(
-          theme:
-              ThemeData(brightness: Brightness.dark, primaryColor: Colors.grey),
-          home: Scaffold(
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: const [
-                    Text(
-                      'Heroes not found',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+    if (!isLoaded) {
+      return const MarvelPlaceholder(message: "Loading...");
+    }
+
+    if (isLoaded && heroes.isEmpty) {
+      return const MarvelPlaceholder(
+        message: 'Heroes not found',
       );
     }
 
-    return Material(
-      type: MaterialType.transparency,
-      child: MaterialApp(
-        theme:
-            ThemeData(brightness: Brightness.dark, primaryColor: Colors.grey),
-        home: Scaffold(
-          body: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                  width: 200,
-                  margin: const EdgeInsets.all(20),
-                  child: Image.asset('image/marvel.png')),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-                child: const Text(
-                  'Choose your hero',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 38,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              Flexible(
-                fit: FlexFit.tight,
-                child: PageView.builder(
-                    controller: controller,
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    pageSnapping: true,
-                    padEnds: true,
-                    itemCount: heroes.length,
-                    itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        MarvelInfo(
-                                          marvel: heroes[index],
-                                        ))),
-                            child: Hero(
-                              tag: heroes[index].id,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                elevation: 15,
-                                clipBehavior: Clip.antiAlias,
-                                child: Stack(
-                                  alignment: Alignment.bottomLeft,
-                                  children: <Widget>[
-                                    Image.network(
-                                      heroes[index].image,
-                                      fit: BoxFit.cover,
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                      alignment: Alignment.center,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(16),
-                                      child: Text(
-                                        heroes[index].name,
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 50,
-                                            decoration: TextDecoration.none),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        )),
-              ),
-            ],
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Container(
+            width: 200,
+            margin: const EdgeInsets.all(20),
+            child: Image.asset('image/marvel.png')),
+        Container(
+          margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+          child: const Text(
+            'Choose your hero',
+            style: TextStyle(
+                color: Colors.white, fontSize: 38, fontWeight: FontWeight.w500),
           ),
         ),
-      ),
+        Flexible(
+          fit: FlexFit.tight,
+          child: PageView.builder(
+              controller: controller,
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              pageSnapping: true,
+              padEnds: true,
+              itemCount: heroes.length,
+              itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => MarvelInfo(
+                                marvel: heroes[index],
+                              ))),
+                      child: Hero(
+                        tag: heroes[index].id,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          elevation: 15,
+                          clipBehavior: Clip.antiAlias,
+                          child: Stack(
+                            alignment: Alignment.bottomLeft,
+                            children: <Widget>[
+                              Image.network(
+                                heroes[index].image,
+                                fit: BoxFit.cover,
+                                height: double.infinity,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Text(
+                                  heroes[index].name,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 50,
+                                      decoration: TextDecoration.none),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )),
+        ),
+      ],
     );
   }
 }
