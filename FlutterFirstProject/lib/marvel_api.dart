@@ -2,9 +2,12 @@ import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
+import 'database.dart';
 import 'marvel.dart';
 
 class MarvelApi {
+  final MarvelDatabase database = MarvelDatabase();
+
   Future<Marvel> readMarvelHero(int id) async {
     Dio dio = Dio();
     var public = '857874b00fdca6330433d7448e97392a';
@@ -53,12 +56,13 @@ class MarvelApi {
             image: r['thumbnail']['path'] + '/portrait_incredible.jpg',
             text: r['description']));
       }
- 
+
+      database.addMarvels(marvel);
+
       return marvel;
     } catch (e) {
-      return marvel;
+      return database.marvels;
     }
-
   }
 
   Future<List<Marvel>> readMarvelHeroes(List<int> ids) async {
@@ -67,9 +71,13 @@ class MarvelApi {
       for (var id in ids) {
         marvel.add(readMarvelHero(id));
       }
-      return Future.wait(marvel);
+
+      var tmp = await Future.wait(marvel);
+      database.addMarvels(tmp);
+
+      return tmp;
     } catch (e) {
-      return [];
+      return database.marvels;
     }
   }
 }
