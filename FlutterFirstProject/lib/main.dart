@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfirstproject/marvel_api.dart';
+import 'package:flutterfirstproject/marvel_image.dart';
 import 'package:flutterfirstproject/marvel_info.dart';
+import 'package:provider/provider.dart';
 
+import 'database.dart';
 import 'marvel.dart';
 import 'marvel_placeholder.dart';
 
@@ -14,8 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(brightness: Brightness.dark, primaryColor: Colors.grey),
-      home: const Scaffold(
-        body: MarvelPageView(),
+      home: Scaffold(
+        body: Provider(
+            create: (_) => MarvelDatabase(), child: const MarvelPageView()),
       ),
     );
   }
@@ -39,7 +43,7 @@ class _MyStatelessWidget extends State<MarvelPageView> {
     super.initState();
 
     MarvelApi api = MarvelApi();
-    api.readFirstHeroes(50).then((values) {
+    api.readFirstHeroes(5).then((values) {
       setState(() {
         isLoaded = true;
         heroes = values;
@@ -99,15 +103,10 @@ class _MyStatelessWidget extends State<MarvelPageView> {
                           elevation: 15,
                           clipBehavior: Clip.antiAlias,
                           child: Stack(
+                            fit: StackFit.expand,
                             alignment: Alignment.bottomLeft,
                             children: <Widget>[
-                              Image.network(
-                                heroes[index].image,
-                                fit: BoxFit.cover,
-                                height: double.infinity,
-                                width: double.infinity,
-                                alignment: Alignment.center,
-                              ),
+                              MarvelImage(marvel: heroes[index]),
                               Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Text(
